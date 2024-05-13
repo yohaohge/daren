@@ -24,8 +24,10 @@ def parse_page(root):
             for element in creator[0].xpath("td[1]/div/span/div/div[2]/div[2]/div/span"):
                 if len(category) > 0:
                     category += "|"
-                category += element.xpath("div/span/div/div/div")[0].text
-
+                try:
+                    category += element.xpath("div/span/div/div/div")[0].text
+                except Exception as e:
+                    category = "todo"
             fans = creator[0].xpath("td[2]/div/span/div")[0].text
             if "K" in fans:
                 fans = fans.replace("K", "")
@@ -74,11 +76,11 @@ def collect_creator():
         time.sleep(1)
 
         # 下拉10次加载更多数据
-        for i in range(1, 10):
-            element = driver.find_element(by=By.XPATH,
-                                          value="/html/body/div[2]/div/div[2]/main/div/div")
-            ActionChains(driver).move_to_element(to_element=element).scroll_by_amount(0, 500 * i).perform()
-            time.sleep(1)
+        # for i in range(1, 10):
+        #     element = driver.find_element(by=By.XPATH,
+        #                                   value="/html/body/div[2]/div/div[2]/main/div/div")
+        #     ActionChains(driver).move_to_element(to_element=element).scroll_by_amount(0, 500 * i).perform()
+        #     time.sleep(1)
 
         html_content = driver.page_source
         root = etree.HTML(html_content)
