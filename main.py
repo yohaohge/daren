@@ -12,7 +12,7 @@ from collect_creator import *
 from batch import *
 def main_menu():
     print("Welcome to the Command Line Menu")
-    print("1. 复制邀请")
+    print("1. 登录")
     print("2. 发送消息")
     print("3. 收集达人")
     print("4. 批量邀请")
@@ -20,8 +20,8 @@ def main_menu():
     choice = input("Please enter your choice: ")
 
     if choice == '1':
-        print("复制邀请")
-        copy_invitation("zengtrillo")
+        print("登录")
+        login()
         # 在这里执行 Option 1 的操作
     elif choice == '2':
         print("发送消息")

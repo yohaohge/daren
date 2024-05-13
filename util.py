@@ -3,6 +3,11 @@ import time
 from __init__ import *
 
 
+def check_login() ->bool:
+    if "login" in driver.current_url:
+        return False
+    return True
+
 def switch_to_target(url:str) -> bool:
     try:
         for tab in driver.window_handles:

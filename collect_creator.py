@@ -7,12 +7,14 @@ from selenium.webdriver.common.by import By
 from lxml import etree
 from db.add_creator import add_creator
 from selenium.webdriver.common.action_chains import ActionChains
+from util import *
+
 
 def parse_page(root):
     i = 1
     while True:
         path = "/html/body/div[2]/div/div[2]/main/div/div/div/div/div[5]/div/div/div/div/div[2]/div/div/div/div/div/div[2]/table/tr[%d]" % (
-                    i * 2)
+                i * 2)
         creator = root.xpath(path)
         if not creator:
             break
@@ -57,8 +59,8 @@ def parse_page(root):
 
         i = i + 1
 
-def collect_creator():
 
+def collect_creator():
     try:
         if driver.current_url != "https://affiliate.tiktokglobalshop.com/connection/creator?shop_region=PH":
             windows = driver.window_handles
@@ -69,19 +71,20 @@ def collect_creator():
             driver.get("https://affiliate.tiktokglobalshop.com/connection/creator?shop_region=PH")
             time.sleep(5)
 
+        if not check_login():
+            return False
+
         time.sleep(1)  #
         element = driver.find_element(by=By.XPATH,
                                       value="/html/body/div[2]/div/div[2]/main/div/div/div/div/div[4]/div[1]/div/div/div/div/div/div[2]")
         driver.execute_script("arguments[0].click();", element)
         time.sleep(1)
 
-
-
         # 下拉10次加载更多数据
         for i in range(1, 10):
             element = driver.find_element(by=By.XPATH,
                                           value="/html/body/div[2]/div/div[2]/main/div/div")
-            ActionChains(driver).move_to_element(to_element=element).scroll_by_amount(0, 500*i).perform()
+            ActionChains(driver).move_to_element(to_element=element).scroll_by_amount(0, 500 * i).perform()
             time.sleep(1)
 
         html_content = driver.page_source
