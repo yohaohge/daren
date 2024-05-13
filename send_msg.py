@@ -11,6 +11,9 @@ def send_msg(creator:str)-> bool:
         # 查找达人页面
         switch_to_target("https://affiliate.tiktokglobalshop.com/connection/creator?shop_region=PH")
 
+        if not check_login():
+            return False
+
         # 搜索达人
         for i in range(0, 10):
             try:

@@ -62,15 +62,8 @@ def parse_page(root):
 
 def collect_creator():
     try:
-        if driver.current_url != "https://affiliate.tiktokglobalshop.com/connection/creator?shop_region=PH":
-            windows = driver.window_handles
-            driver.switch_to.window(windows[0])
 
-        # 打开查找达人页面
-        if driver.current_url != "https://affiliate.tiktokglobalshop.com/connection/creator?shop_region=PH":
-            driver.get("https://affiliate.tiktokglobalshop.com/connection/creator?shop_region=PH")
-            time.sleep(5)
-
+        switch_to_target("https://affiliate.tiktokglobalshop.com/connection/creator?shop_region=PH")
         if not check_login():
             return False
 

@@ -36,10 +36,6 @@ def main_menu():
 
 
 if __name__ == "__main__":
-    # 登录网页
-    if not login():
-        exit(1)
-
     # 打开网页
     while True:
         main_menu()
