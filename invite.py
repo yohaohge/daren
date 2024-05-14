@@ -6,11 +6,11 @@ import time
 from util import *
 
 
-def copy_invitation(creator: str) -> bool:
+def copy_invitation(creator: str, sample_id, nation) -> bool:
     try:
-        from_url = "https://affiliate.tiktokglobalshop.com/connection/target-invitation?shop_region=PH&tab=1"
+        from_url = "https://affiliate.tiktokglobalshop.com/connection/target-invitation?shop_region=%s&tab=1"%nation
         switch_to_target(from_url)
-        target_url = "https://affiliate.tiktokglobalshop.com/connection/target-invitation/create?invitation_id=7366929733075896070&enter_from=target_invitation_list&enter_method=duplicate&shop_region=PH"
+        target_url = "https://affiliate.tiktokglobalshop.com/connection/target-invitation/create?invitation_id=%s&enter_from=target_invitation_list&enter_method=duplicate&shop_region=%s"%(sample_id, nation)
         # 复制第一个
         driver.get(target_url)
         time.sleep(5)
