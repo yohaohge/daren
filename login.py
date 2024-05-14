@@ -34,4 +34,4 @@ def login() -> bool:
         return True
     else:
         print("不是登录页面")
-        return False
+        return True

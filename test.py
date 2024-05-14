@@ -1,6 +1,10 @@
 from lxml import etree
 from db.add_creator import add_creator
 
+from db.update_invite import *
+
+update_invite("noigels_shop")
+
 html_content = ""
 with open("tmp.html", "r") as f:
     html_content = f.read()

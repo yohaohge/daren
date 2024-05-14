@@ -10,7 +10,7 @@ from selenium.webdriver.common.action_chains import ActionChains
 from util import *
 
 
-def parse_page(root):
+def parse_page(root, nation):
     i = 1
     while True:
         path = "/html/body/div[2]/div/div[2]/main/div/div/div/div/div[5]/div/div/div/div/div[2]/div/div/div/div/div/div[2]/table/tr[%d]" % (
@@ -53,7 +53,7 @@ def parse_page(root):
             print(creator_name, category, fans, views, gmp)
             # 插入到数据库
             try:
-                add_creator((creator_name, category, fans, views, gmp, ''))
+                add_creator((creator_name, category, fans, views, gmp, '', nation))
             except Exception as e:
                 print("插入失败", e)
         except Exception as e:
@@ -62,10 +62,10 @@ def parse_page(root):
         i = i + 1
 
 
-def collect_creator():
+def collect_creator(nation:str):
     try:
 
-        switch_to_target("https://affiliate.tiktokglobalshop.com/connection/creator?shop_region=PH")
+        switch_to_target("https://affiliate.tiktokglobalshop.com/connection/creator?shop_region=%s"%nation)
         if not check_login():
             return False
 
@@ -84,7 +84,7 @@ def collect_creator():
 
         html_content = driver.page_source
         root = etree.HTML(html_content)
-        parse_page(root)
+        parse_page(root,nation)
     except Exception as e:
         print("收集失败", e)
     return

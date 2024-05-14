@@ -9,11 +9,12 @@ sql_text_1 = '''CREATE TABLE creator
             粉丝数 NUMBER,
             视频平均播放数 NUMBER,
             GPM TEXT,
-            上次邀请 TEXT
+            上次邀请 TEXT,
+            国家 TEXT
             );'''
 
 conn.execute(sql_text_1)
 # 执行sql语句
 
-cur.execute("insert into creator values(?,?,?,?,?,?)", ("noigels_shop", "服饰",20800, 13180, "₱544.53 - ₱816.79", ''))
+cur.execute("insert into creator values(?,?,?,?,?,?,?)", ("noigels_shop", "服饰",20800, 13180, "₱544.53 - ₱816.79", '', 'PH'))
 conn.commit()
