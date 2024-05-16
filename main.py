@@ -105,9 +105,9 @@ def do_login():
 
 def do_collect():
     if collect_creator(nation_val.get()):
-        messagebox.showinfo("错误", "收集达人成功")
+        print("错误", "收集达人成功")
     else:
-        messagebox.showinfo("错误", "收集达人失败")
+        print("错误", "收集达人失败")
 
 
 def do_batch_msg():
