@@ -5,9 +5,9 @@ import time
 from selenium.webdriver import Keys
 from selenium.webdriver.common.by import By
 from lxml import etree
-from db.add_creator import add_creator
 from selenium.webdriver.common.action_chains import ActionChains
 from util import *
+from db import *
 
 
 def parse_page(root, nation):
@@ -53,7 +53,7 @@ def parse_page(root, nation):
             print(creator_name, category, fans, views, gmp)
             # 插入到数据库
             try:
-                add_creator((creator_name, category, fans, views, gmp, '', nation))
+                add_creator(creator_name, category, fans, views, gmp, nation)
             except Exception as e:
                 print("插入失败", e)
         except Exception as e:
@@ -62,10 +62,10 @@ def parse_page(root, nation):
         i = i + 1
 
 
-def collect_creator(nation:str):
+def collect_creator(nation: str):
     try:
 
-        switch_to_target("https://affiliate.tiktokglobalshop.com/connection/creator?shop_region=%s"%nation)
+        switch_to_target("https://affiliate.tiktokglobalshop.com/connection/creator?shop_region=%s" % nation)
         if not check_login():
             return False
 
@@ -84,15 +84,16 @@ def collect_creator(nation:str):
 
         html_content = driver.page_source
         root = etree.HTML(html_content)
-        parse_page(root,nation)
+        parse_page(root, nation)
     except Exception as e:
         print("收集失败", e)
     return
 
-def auto_collect(nation:str, key:str):
+
+def auto_collect(nation: str, key: str):
     try:
 
-        switch_to_target("https://affiliate.tiktokglobalshop.com/connection/creator?shop_region=%s"%nation)
+        switch_to_target("https://affiliate.tiktokglobalshop.com/connection/creator?shop_region=%s" % nation)
         if not check_login():
             return False
 
@@ -129,7 +130,7 @@ def auto_collect(nation:str, key:str):
 
         html_content = driver.page_source
         root = etree.HTML(html_content)
-        parse_page(root,nation)
+        parse_page(root, nation)
     except Exception as e:
         print("收集失败", e)
     return

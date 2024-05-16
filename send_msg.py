@@ -5,10 +5,10 @@ from selenium.webdriver.common.action_chains import ActionChains
 import time
 import traceback
 from util import *
-from db.update_invite import *
+from db import *
 
 
-def send_msg(creator: str, nation: str, msg: str) -> bool:
+def send_msg(creator: str, nation: str, msg: str, current_user:str) -> bool:
     try:
         # 查找达人页面
         switch_to_target("https://affiliate.tiktokglobalshop.com/connection/creator?shop_region=%s" % nation)
@@ -68,7 +68,6 @@ def send_msg(creator: str, nation: str, msg: str) -> bool:
                                                   value="/html/body/div[2]/div/div/div[2]/div/div[1]/div/div/div[2]/div[3]/div/textarea")
                     element.send_keys(' ')
                     element.send_keys(Keys.RETURN)
-                    update_invite(creator)
                     break
                 else:
                     print("加载中")

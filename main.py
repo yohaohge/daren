@@ -15,6 +15,7 @@ import tkinter as tk
 from home import *
 import _thread
 from auto_collect import *
+from tkinter import messagebox
 
 
 def select_nation():
@@ -84,58 +85,60 @@ for item in category_list:
 # shop_info_text.set("当前店铺:" + "未获取")
 
 
-info_label = tk.Label(window, textvariable=info_val, text="信息提示")
-info_label.grid(row=10, rowspan=2, column=0, columnspan=7, sticky='w')
-info_val.set("信息提示")
-
 input = tk.Text(window)
 input.grid(row=11, rowspan=5, column=0, columnspan=7, sticky='w')
 
-# sample_text = tk.StringVar()
-# input2 = tk.Entry(window, textvariable=sample_text)
-# input2.grid(row=9, rowspan=5, column=0, columnspan=7, sticky='w')
-# sample_text.set("请输入样板邀请id")
+sample_text = tk.StringVar()
+input2 = tk.Entry(window, textvariable=sample_text)
+input2.grid(row=5, rowspan=1, column=2, columnspan=2, sticky='w')
+
+current_user = ""
 
 
 def do_login():
     if login():
-        info_val.set("登录成功")
+        print("登录成功")
         do_get_info()
     else:
-        info_val.set("登录失败")
+        messagebox.showinfo("错误", "登录失败")
 
 
 def do_collect():
     if collect_creator(nation_val.get()):
-        info_val.set("收集达人成功")
+        messagebox.showinfo("错误", "收集达人成功")
     else:
-        info_val.set("收集达人失败")
+        messagebox.showinfo("错误", "收集达人失败")
 
 
 def do_batch_msg():
     if len(selected_categorys) == 0:
-        info_val.set("没有选目标类目!!!")
+        messagebox.showinfo("错误", "没有选目标类目!!!")
         return
-    _thread.start_new_thread(batch_msg, (nation_val.get(), selected_categorys, input.get(1.0, tk.END),))
+    if len(current_user) == 0:
+        messagebox.showinfo("错误", "没有同步当前登录的用户!!!")
+        return
+    _thread.start_new_thread(batch_msg, (nation_val.get(), selected_categorys, input.get(1.0, tk.END), current_user))
 
 
 def do_auto():
     _thread.start_new_thread(auto, (nation_val.get(),))
 
-# def do_batch_invite():
-#     if len(selected_categorys) == 0:
-#         info_val.set("没有选目标类目!!!")
-#         return
-#     if sample_text.get().isdigit():
-#         info_val.set("样本id需要是数值")
-#         return
-#     _thread.start_new_thread(batch_invite, (nation_val.get(), selected_categorys, sample_text.get()))
+
+def do_batch_invite():
+    if len(selected_categorys) == 0:
+        messagebox.showinfo("错误", "没有选目标类目!!!")
+        return
+    if not sample_text.get().isdigit():
+        messagebox.showinfo("错误", "样本id需要是数值")
+        return
+    _thread.start_new_thread(batch_invite, (nation_val.get(), selected_categorys, sample_text.get(), current_user))
 
 
 def do_get_info():
+    global current_user
     shop_name = get_home_info()
     window.title("邀请达人(" + shop_name + ")")
-    info_val.set("当前店铺:" + shop_name)
+    current_user = shop_name
 
 
 if __name__ == "__main__":
@@ -153,17 +156,16 @@ if __name__ == "__main__":
     send_msg = tk.Button(window, text='批量给达人发送消息', command=do_batch_msg)
     send_msg.grid(row=4, column=0, columnspan=3, sticky='w')
 
-    # home_info = tk.Button(window, text='批量邀请达人', command=do_batch_invite)
-    # home_info.grid(row=5, column=0, columnspan=3, sticky='w')
+    home_info = tk.Button(window, text='批量邀请达人', command=do_batch_invite)
+    home_info.grid(row=5, column=0, columnspan=3, sticky='w')
 
     home_info = tk.Button(window, text='获取当前账号信息', command=do_get_info)
-    home_info.grid(row=6, column=0, columnspan=3, sticky='w')
+    home_info.grid(row=6, column=0, columnspan=2, sticky='w')
 
     stop_msg = tk.Button(window, text='停止发消息', command=end_batch)
     stop_msg.grid(row=7, column=0, columnspan=3, sticky='w')
 
-    stop_msg = tk.Button(window, text='自动收集达人', command=do_auto)
+    stop_msg = tk.Button(window, text='自动收集达人（先输入模版id）', command=do_auto)
     stop_msg.grid(row=8, column=0, columnspan=3, sticky='w')
-
 
     window.mainloop()

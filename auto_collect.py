@@ -9,7 +9,6 @@ alphabet = 'abcdefghijklmnopqrstuvwxyz0123456789'
 characters = random.sample(alphabet, 5)
 
 
-
 def auto(nation):
     for _ in range(10):
         try:

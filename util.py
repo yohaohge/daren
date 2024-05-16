@@ -10,6 +10,10 @@ def check_login() ->bool:
 
 def switch_to_target(url:str) -> bool:
     try:
+
+        if url in driver.current_url:
+            return True
+
         for tab in driver.window_handles:
             driver.switch_to.window(tab)
             if url in driver.current_url:
