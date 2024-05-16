@@ -14,6 +14,7 @@ import time
 import tkinter as tk
 from home import *
 import _thread
+from auto_collect import *
 
 
 def select_nation():
@@ -118,6 +119,9 @@ def do_batch_msg():
     _thread.start_new_thread(batch_msg, (nation_val.get(), selected_categorys, input.get(1.0, tk.END),))
 
 
+def do_auto():
+    _thread.start_new_thread(auto, (nation_val.get(),))
+
 # def do_batch_invite():
 #     if len(selected_categorys) == 0:
 #         info_val.set("没有选目标类目!!!")
@@ -158,6 +162,8 @@ if __name__ == "__main__":
     stop_msg = tk.Button(window, text='停止发消息', command=end_batch)
     stop_msg.grid(row=7, column=0, columnspan=3, sticky='w')
 
+    stop_msg = tk.Button(window, text='自动收集达人', command=do_auto)
+    stop_msg.grid(row=8, column=0, columnspan=3, sticky='w')
 
 
     window.mainloop()
