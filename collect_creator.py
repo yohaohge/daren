@@ -88,3 +88,48 @@ def collect_creator(nation:str):
     except Exception as e:
         print("收集失败", e)
     return
+
+def auto_collect(nation:str, key:str):
+    try:
+
+        switch_to_target("https://affiliate.tiktokglobalshop.com/connection/creator?shop_region=%s"%nation)
+        if not check_login():
+            return False
+
+        time.sleep(1)  #
+        element = driver.find_element(by=By.XPATH,
+                                      value="/html/body/div[2]/div/div[2]/main/div/div/div/div/div[4]/div[1]/div/div/div/div/div/div[2]")
+        driver.execute_script("arguments[0].click();", element)
+        time.sleep(1)  #
+
+        element = driver.find_element(by=By.XPATH,
+                                      value="/html/body/div[2]/div/div[2]/main/div/div/div/div/div[3]/div/div/div/div[1]/div/div/div/div/span/span/input")
+        driver.execute_script(
+            '''
+            arguments[0].value = arguments[1];
+            '''
+            , element,
+            '')
+        element = driver.find_element(by=By.XPATH,
+                                      value="/html/body/div[2]/div/div[2]/main/div/div/div/div/div[3]/div/div/div/div[1]/div/div/div/div/span/span/input")
+        element.send_keys(key)
+        element.send_keys(Keys.RETURN)
+
+        element = driver.find_element(by=By.XPATH,
+                                      value="/html/body/div[2]/div/div[2]/main/div/div/div/div/div[4]/div[1]/div/div/div/div/div/div[2]")
+        driver.execute_script("arguments[0].click();", element)
+        time.sleep(3)
+
+        # 下拉10次加载更多数据
+        # for i in range(1, 10):
+        #     element = driver.find_element(by=By.XPATH,
+        #                                   value="/html/body/div[2]/div/div[2]/main/div/div")
+        #     ActionChains(driver).move_to_element(to_element=element).scroll_by_amount(0, 500 * i).perform()
+        #     time.sleep(1)
+
+        html_content = driver.page_source
+        root = etree.HTML(html_content)
+        parse_page(root,nation)
+    except Exception as e:
+        print("收集失败", e)
+    return

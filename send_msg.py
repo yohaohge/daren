@@ -51,25 +51,28 @@ def send_msg(creator: str, nation: str, msg: str) -> bool:
                     return False
 
         # 切换到新页面
-        windows = driver.window_handles
-        driver.switch_to.window(windows[-1])
+        switch_to_target("https://affiliate.tiktokglobalshop.com/seller/im")
         for j in range(0, 10):
             try:
-                element = driver.find_element(by=By.XPATH,
-                                              value="/html/body/div[2]/div/div/div[2]/div/div[1]/div/div/div[2]/div[3]/div/textarea")
+                if creator in driver.page_source:
+                    element = driver.find_element(by=By.XPATH,
+                                                  value="/html/body/div[2]/div/div/div[2]/div/div[1]/div/div/div[2]/div[3]/div/textarea")
 
-                driver.execute_script(
-                    '''
-                    arguments[0].value = arguments[1];
-                    '''
-                    , element,
-                    msg)
-                element = driver.find_element(by=By.XPATH,
-                                              value="/html/body/div[2]/div/div/div[2]/div/div[1]/div/div/div[2]/div[3]/div/textarea")
-                element.send_keys(' ')
-                element.send_keys(Keys.RETURN)
-                update_invite(creator)
-                break
+                    driver.execute_script(
+                        '''
+                        arguments[0].value = arguments[1];
+                        '''
+                        , element,
+                        msg)
+                    element = driver.find_element(by=By.XPATH,
+                                                  value="/html/body/div[2]/div/div/div[2]/div/div[1]/div/div/div[2]/div[3]/div/textarea")
+                    element.send_keys(' ')
+                    element.send_keys(Keys.RETURN)
+                    update_invite(creator)
+                    break
+                else:
+                    print("加载中")
+                    time.sleep(0.5)
             except Exception as e:
                 print("发送消息失败", e)
                 traceback.print_exc()

@@ -90,10 +90,10 @@ info_val.set("信息提示")
 input = tk.Text(window)
 input.grid(row=11, rowspan=5, column=0, columnspan=7, sticky='w')
 
-sample_text = tk.StringVar()
-input2 = tk.Entry(window, textvariable=sample_text)
-input2.grid(row=9, rowspan=5, column=0, columnspan=7, sticky='w')
-sample_text.set("请输入样板邀请id")
+# sample_text = tk.StringVar()
+# input2 = tk.Entry(window, textvariable=sample_text)
+# input2.grid(row=9, rowspan=5, column=0, columnspan=7, sticky='w')
+# sample_text.set("请输入样板邀请id")
 
 
 def do_login():
@@ -118,21 +118,14 @@ def do_batch_msg():
     _thread.start_new_thread(batch_msg, (nation_val.get(), selected_categorys, input.get(1.0, tk.END),))
 
 
-def do_batch_msg():
-    if len(selected_categorys) == 0:
-        info_val.set("没有选目标类目!!!")
-        return
-    _thread.start_new_thread(batch_msg, (nation_val.get(), selected_categorys, input.get(1.0, tk.END),))
-
-
-def do_batch_invite():
-    if len(selected_categorys) == 0:
-        info_val.set("没有选目标类目!!!")
-        return
-    if sample_text.get().isdigit():
-        info_val.set("样本id需要是数值")
-        return
-    _thread.start_new_thread(batch_invite, (nation_val.get(), selected_categorys, sample_text.get()))
+# def do_batch_invite():
+#     if len(selected_categorys) == 0:
+#         info_val.set("没有选目标类目!!!")
+#         return
+#     if sample_text.get().isdigit():
+#         info_val.set("样本id需要是数值")
+#         return
+#     _thread.start_new_thread(batch_invite, (nation_val.get(), selected_categorys, sample_text.get()))
 
 
 def do_get_info():
@@ -156,8 +149,8 @@ if __name__ == "__main__":
     send_msg = tk.Button(window, text='批量给达人发送消息', command=do_batch_msg)
     send_msg.grid(row=4, column=0, columnspan=3, sticky='w')
 
-    home_info = tk.Button(window, text='批量邀请达人', command=do_batch_invite)
-    home_info.grid(row=5, column=0, columnspan=3, sticky='w')
+    # home_info = tk.Button(window, text='批量邀请达人', command=do_batch_invite)
+    # home_info.grid(row=5, column=0, columnspan=3, sticky='w')
 
     home_info = tk.Button(window, text='获取当前账号信息', command=do_get_info)
     home_info.grid(row=6, column=0, columnspan=3, sticky='w')
