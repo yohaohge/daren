@@ -37,6 +37,9 @@ def batch_msg(nation: str, categorys, msg: str, current_user:str):
                 print(creator["name"], "非目标达人")
                 continue
 
+            if get_send_msg_time(creator["name"], nation, nation) != "":
+                continue
+
             print("给达人发消息:", creator["name"], nation)
             # 发送邀请
             # if copy_invitation(creator[0]):
@@ -70,6 +73,9 @@ def batch_invite(nation: str, categorys, sample_id, current_user):
                     break
             if not is_target:
                 print(creator["name"], "非目标达人")
+                continue
+
+            if get_invite_time(creator["name"], nation, current_user) != "":
                 continue
 
             print("给达人发邀请:", creator["name"], nation)
