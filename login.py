@@ -1,10 +1,11 @@
-from __init__ import driver
+from __init__ import *
 import time
 from selenium.webdriver import Keys
 from selenium.webdriver.common.by import By
 
 
 def login() -> bool:
+    driver = get_driver()
     url = "https://seller.tiktokglobalshop.com/account/login?redirect_url=https%3A%2F%2Faffiliate.tiktokglobalshop.com"
     # 打开网页
     driver.get(url)

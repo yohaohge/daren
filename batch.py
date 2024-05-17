@@ -13,7 +13,7 @@ def end_batch():
     is_doing = False
 
 
-def batch_msg(nation: str, categorys, msg: str, current_user:str):
+def batch_msg(nation: str, categorys, msg: str, current_user:str,min_fan_num: int):
     global is_doing
     if not is_doing:
         is_doing = True
@@ -26,6 +26,9 @@ def batch_msg(nation: str, categorys, msg: str, current_user:str):
         for creator in creators.values():
             if not is_doing:
                 return
+
+            if creator["fans"] < min_fan_num:
+                continue
 
             print(creator)
             is_target = False
@@ -52,7 +55,7 @@ def batch_msg(nation: str, categorys, msg: str, current_user:str):
     is_doing = False
 
 
-def batch_invite(nation: str, categorys, sample_id, current_user):
+def batch_invite(nation: str, categorys, sample_id, current_user,min_fan_num: int):
     global is_doing
     if not is_doing:
         is_doing = True
@@ -64,6 +67,9 @@ def batch_invite(nation: str, categorys, sample_id, current_user):
         creators = get_creator(nation)
         for creator in creators.values():
             if not is_doing:
+                return
+
+            if creator["fans"] < min_fan_num:
                 return
 
             is_target = False

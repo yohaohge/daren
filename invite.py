@@ -1,4 +1,4 @@
-from __init__ import driver
+from __init__ import *
 from selenium.webdriver import Keys
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.action_chains import ActionChains
@@ -7,6 +7,7 @@ from util import *
 
 
 def copy_invitation(creator: str, sample_id, nation) -> bool:
+    driver = get_driver()
     try:
         from_url = "https://affiliate.tiktokglobalshop.com/connection/target-invitation?shop_region=%s&tab=1"%nation
         switch_to_target(from_url)

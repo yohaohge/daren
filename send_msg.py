@@ -1,4 +1,4 @@
-from __init__ import driver
+from __init__ import *
 from selenium.webdriver import Keys
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.action_chains import ActionChains
@@ -9,6 +9,7 @@ from db import *
 
 
 def send_msg(creator: str, nation: str, msg: str, current_user:str) -> bool:
+    driver = get_driver()
     try:
         # 查找达人页面
         switch_to_target("https://affiliate.tiktokglobalshop.com/connection/creator?shop_region=%s" % nation)

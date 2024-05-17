@@ -1,6 +1,6 @@
 # 收集达人
 
-from __init__ import driver
+from __init__ import *
 import time
 from selenium.webdriver import Keys
 from selenium.webdriver.common.by import By
@@ -63,6 +63,7 @@ def parse_page(root, nation):
 
 
 def collect_creator(nation: str):
+    driver = get_driver()
     try:
 
         switch_to_target("https://affiliate.tiktokglobalshop.com/connection/creator?shop_region=%s" % nation)
@@ -91,6 +92,7 @@ def collect_creator(nation: str):
 
 
 def auto_collect(nation: str, key: str):
+    driver = get_driver()
     try:
 
         switch_to_target("https://affiliate.tiktokglobalshop.com/connection/creator?shop_region=%s" % nation)

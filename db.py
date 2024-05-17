@@ -171,7 +171,7 @@ def update_send_msg(name, nation, current_user):
 
 def get_send_msg_time(name, nation, current_user):
     if current_user not in user_data_manager:
-        return ""
+        load_from_file(current_user)
 
     user_data = user_data_manager[current_user]
     if name not in user_data.nation_creator_map[nation]:
@@ -182,10 +182,12 @@ def get_send_msg_time(name, nation, current_user):
 
 def get_invite_time(name, nation, current_user):
     if current_user not in user_data_manager:
-        return ""
+        load_from_file(current_user)
 
     user_data = user_data_manager[current_user]
     if name not in user_data.nation_creator_map[nation]:
         return ""
     else:
         return user_data.nation_creator_map[nation][name]["last_invite_time"]
+
+

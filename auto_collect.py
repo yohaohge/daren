@@ -9,10 +9,10 @@ alphabet = 'abcdefghijklmnopqrstuvwxyz0123456789'
 characters = random.sample(alphabet, 5)
 
 
-def auto(nation):
-    for _ in range(10):
+def auto(nation, prefix_len:int, max_cnt:int):
+    for _ in range(max_cnt):
         try:
-            auto_collect(nation, random.sample(alphabet, 3))
+            auto_collect(nation, random.sample(alphabet, prefix_len))
         except Exception as e:
             print(e)
             time.sleep(3)
