@@ -64,7 +64,7 @@ def batch_invite(nation: str, categorys, sample_id, current_user,min_fan_num: in
 
     creators = []
     for creator in get_creator(nation).values():
-        if int(creator["fans"]) < 10:
+        if int(creator["fans"]) < 500:
             continue
         is_target = False
         for category in "服饰":
@@ -80,7 +80,7 @@ def batch_invite(nation: str, categorys, sample_id, current_user,min_fan_num: in
         creators.append(creator)
 
     # 10个一组
-    groups = [creators[i:i + 10] for i in range(0, len(creators), 10)]
+    groups = [creators[i:i + 20] for i in range(0, len(creators), 20)]
 
 
     # 数据库读取达人信息
