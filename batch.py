@@ -62,32 +62,35 @@ def batch_invite(nation: str, categorys, sample_id, current_user,min_fan_num: in
     else:
         return
 
+    creators = []
+    for creator in get_creator("PH").values():
+        if int(creator["fans"]) < 10:
+            continue
+        is_target = False
+        for category in "服饰":
+            if category in creator["category"]:
+                is_target = True
+                break
+        if not is_target:
+            print(creator["name"], "非目标达人")
+            continue
+
+        if get_invite_time(creator["name"], "PH", "JJ") != "":
+            continue
+        creators.append(creator)
+
+    # 10个一组
+    groups = [creators[i:i + 10] for i in range(0, len(creators), 10)]
+
+
     # 数据库读取达人信息
     try:
-        creators = get_creator(nation)
-        for creator in creators.values():
-            if not is_doing:
-                return
-
-            if creator["fans"] < min_fan_num:
-                return
-
-            is_target = False
-            for category in categorys:
-                if category in creator["category"]:
-                    is_target = True
-                    break
-            if not is_target:
-                print(creator["name"], "非目标达人")
-                continue
-
-            if get_invite_time(creator["name"], nation, current_user) != "":
-                continue
-
-            print("给达人发邀请:", creator["name"], nation)
+        for group in groups:
+            print("小组1")
             # 发送邀请
-            copy_invitation(creator["name"], sample_id, nation)
-            update_invite(creator["name"],nation, current_user)
+            copy_invitation(group, sample_id, nation)
+            for creator in group:
+                update_invite(creator["name"], nation, current_user)
     except Exception as e:
         print(e)
     is_doing = False

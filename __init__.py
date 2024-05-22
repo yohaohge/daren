@@ -28,3 +28,4 @@ def reload_driver():
         driver_manager["Chrome"].quit()
         driver_manager.clear()
     get_driver()
+

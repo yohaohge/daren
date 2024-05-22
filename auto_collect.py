@@ -5,7 +5,7 @@ from collect_creator import *
 
 import random
 
-alphabet = 'abcdefghijklmnopqrstuvwxyz0123456789'
+alphabet = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRTUVWXYZ'
 characters = random.sample(alphabet, 5)
 
 

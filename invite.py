@@ -6,7 +6,7 @@ import time
 from util import *
 
 
-def copy_invitation(creator: str, sample_id, nation) -> bool:
+def copy_invitation(group:list, sample_id, nation) -> bool:
     driver = get_driver()
     try:
         from_url = "https://affiliate.tiktokglobalshop.com/connection/target-invitation?shop_region=%s&tab=1"%nation
@@ -19,21 +19,31 @@ def copy_invitation(creator: str, sample_id, nation) -> bool:
         if not check_login():
             return False
 
-        for i in range(0, 10):
-            try:
-                element = driver.find_element(by=By.XPATH,
-                                              value="/html/body/div[2]/div/div[2]/main/div/div/div/div/div[2]/div/form/div/div/div[1]/div[1]/div[1]/div/div/div[2]/div/div[1]/div/div/div/div/span/span/input")
-                element.send_keys(creator)
-                element.send_keys(Keys.RETURN)
+        for creator in group:
+            for i in range(0, 10):
+                try:
 
-                time.sleep(1)  #
-                element = driver.find_element(by=By.XPATH,
-                                              value="/html/body/div[2]/div/div[2]/main/div/div/div/div/div[2]/div/form/div/div/div[1]/div[1]/div[1]/div/div/div[2]/div/div[1]/div/div/div/div/div/span/div/div/div/div/div/div/div[1]/div/div/div")
-                driver.execute_script("arguments[0].click();", element)
-                break
-            except:
-                print("搜索失败")
-                time.sleep(2)
+                    element = driver.find_element(by=By.XPATH,
+                                                  value="/html/body/div[2]/div/div[2]/main/div/div/div/div/div[2]/div/form/div/div/div[1]/div[1]/div[1]/div/div/div[2]/div/div[1]/div/div/div/div/span/span/input")
+                    driver.execute_script(
+                        '''
+                        arguments[0].value = arguments[1];
+                        '''
+                        , element,
+                        '')
+                    element = driver.find_element(by=By.XPATH,
+                                                  value="/html/body/div[2]/div/div[2]/main/div/div/div/div/div[2]/div/form/div/div/div[1]/div[1]/div[1]/div/div/div[2]/div/div[1]/div/div/div/div/span/span/input")
+                    element.send_keys(creator["name"])
+                    element.send_keys(Keys.RETURN)
+
+                    time.sleep(1)  #
+                    element = driver.find_element(by=By.XPATH,
+                                                  value="/html/body/div[2]/div/div[2]/main/div/div/div/div/div[2]/div/form/div/div/div[1]/div[1]/div[1]/div/div/div[2]/div/div[1]/div/div/div/div/div/span/div/div/div/div/div/div/div[1]/div/div/div")
+                    driver.execute_script("arguments[0].click();", element)
+                    break
+                except:
+                    print("搜索失败")
+                    time.sleep(2)
 
         element = driver.find_element(by=By.XPATH,
                                       value="/html/body/div[2]/div/div[2]/main/div/div/div/div/div[2]/div/form/div/div/div[1]/div[1]/div[4]/div/div/div[1]/div[1]/div/div[1]")

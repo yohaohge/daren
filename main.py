@@ -139,10 +139,12 @@ def do_auto():
         prefix_len_num = 3
     else:
         prefix_len_num = int(prefix_len.get())
-    if not max_cnt.get().isdigit() or len(max_cnt.get()):
+
+    if not max_cnt.get().isdigit() or len(max_cnt.get()) == 0:
         max_cnt_num = 10
     else:
-        max_cnt_num = int(prefix_len.get())
+        max_cnt_num = int(max_cnt.get())
+    print("收集次数", max_cnt_num, max_cnt.get())
     _thread.start_new_thread(auto, (nation_val.get(),prefix_len_num, max_cnt_num))
 
 

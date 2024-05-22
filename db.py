@@ -72,8 +72,9 @@ def get_obj_by_nation(nation):
 def add_creator(name: str, category: str, fans: int, views: int, gmp: str, nation: str):
     creators = get_obj_by_nation(nation)
     if name in creators:
-        print("已经收集过该达人了", name)
         return
+
+    print("发现新达人", name)
 
     creators[name] = {
         "name": name,
@@ -191,3 +192,27 @@ def get_invite_time(name, nation, current_user):
         return user_data.nation_creator_map[nation][name]["last_invite_time"]
 
 
+if __name__ == "__main__":
+
+    creators = []
+    for creator in get_creator("PH").values():
+        if int(creator["fans"]) < 10:
+            continue
+        is_target = False
+        for category in "服饰":
+            if category in creator["category"]:
+                is_target = True
+                break
+        if not is_target:
+            print(creator["name"], "非目标达人")
+            continue
+
+        if get_invite_time(creator["name"], "PH", "JJ") != "":
+            continue
+        creators.append(creator)
+
+    # 10个一组
+    groups = [creators[i:i+10] for i in range(0,len(creators),10)]
+
+    for group in groups:
+        print(len(group))

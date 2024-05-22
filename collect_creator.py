@@ -50,7 +50,7 @@ def parse_page(root, nation):
 
             gmp = creator[0].xpath("td[4]/div/span/div/span/div[1]/div/span")[0].text + " " + \
                   creator[0].xpath("td[4]/div/span/div/span/div[2]/div/span")[0].text
-            print(creator_name, category, fans, views, gmp)
+            # print(creator_name, category, fans, views, gmp)
             # 插入到数据库
             try:
                 add_creator(creator_name, category, fans, views, gmp, nation)
