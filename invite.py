@@ -60,7 +60,7 @@ def copy_invitation(group:list, sample_id, nation) -> bool:
         # 鼠标点击
         ActionChains(driver).click(on_element=element).perform()
         # 输入内容
-        element.send_keys("05/23/2024")
+        element.send_keys("05/23/2025")
         time.sleep(2)
         element.send_keys(Keys.ENTER)
         time.sleep(0.5)

@@ -63,7 +63,7 @@ def batch_invite(nation: str, categorys, sample_id, current_user,min_fan_num: in
         return
 
     creators = []
-    for creator in get_creator("PH").values():
+    for creator in get_creator(nation).values():
         if int(creator["fans"]) < 10:
             continue
         is_target = False
