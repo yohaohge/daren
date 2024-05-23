@@ -101,6 +101,8 @@ class LeftTabWidget(QWidget):
             randint(0, 255), randint(0, 255), randint(0, 255)))
         self.stackedWidget.addWidget(label)
 
+
+
         item = QListWidgetItem(QIcon('Data/0%d.ico' % randint(1, 8)), '批量私信达人', self.listWidget)
         item.setSizeHint(QSize(16777215, 60))
         item.setTextAlignment(Qt.AlignCenter)
@@ -113,6 +115,18 @@ class LeftTabWidget(QWidget):
             randint(0, 255), randint(0, 255), randint(0, 255)))
         self.stackedWidget.addWidget(label)
 
+
+        item = QListWidgetItem(QIcon('Data/0%d.ico' % randint(1, 8)), '二次营销', self.listWidget)
+        item.setSizeHint(QSize(16777215, 60))
+        item.setTextAlignment(Qt.AlignCenter)
+
+        label = QWeb('批量私信页面', self)
+        label.setAlignment(Qt.AlignCenter)
+        # 设置label的背景颜色(这里随机)
+        # 这里加了一个margin边距(方便区分QStackedWidget和QLabel的颜色)
+        label.setStyleSheet('background: rgb(%d, %d, %d);margin: 50px;' % (
+            randint(0, 255), randint(0, 255), randint(0, 255)))
+        self.stackedWidget.addWidget(label)
 
 
 

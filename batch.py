@@ -67,7 +67,7 @@ def batch_invite(nation: str, categorys, sample_id, current_user,min_fan_num: in
         if int(creator["fans"]) < 500:
             continue
         is_target = False
-        for category in "服饰":
+        for category in categorys:
             if category in creator["category"]:
                 is_target = True
                 break
@@ -75,7 +75,7 @@ def batch_invite(nation: str, categorys, sample_id, current_user,min_fan_num: in
             print(creator["name"], "非目标达人")
             continue
 
-        if get_invite_time(creator["name"], "PH", "JJ") != "":
+        if get_invite_time(creator["name"], nation, current_user) != "":
             continue
         creators.append(creator)
 
