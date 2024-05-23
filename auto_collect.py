@@ -5,9 +5,7 @@ from collect_creator import *
 
 import random
 
-alphabet = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRTUVWXYZ'
-characters = random.sample(alphabet, 5)
-
+alphabet = 'abcdefghijklmnopqrstuvwxyz'
 
 def auto(nation, prefix_len:int, max_cnt:int):
     for _ in range(max_cnt):

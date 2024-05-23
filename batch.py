@@ -27,7 +27,7 @@ def batch_msg(nation: str, categorys, msg: str, current_user:str,min_fan_num: in
             if not is_doing:
                 return
 
-            if creator["fans"] < min_fan_num:
+            if int(creator["fans"]) < min_fan_num:
                 continue
 
             print(creator)
@@ -40,7 +40,7 @@ def batch_msg(nation: str, categorys, msg: str, current_user:str,min_fan_num: in
                 print(creator["name"], "非目标达人")
                 continue
 
-            if get_send_msg_time(creator["name"], nation, nation) != "":
+            if get_send_msg_time(creator["name"], nation, current_user) != "":
                 continue
 
             print("给达人发消息:", creator["name"], nation)
@@ -64,7 +64,7 @@ def batch_invite(nation: str, categorys, sample_id, current_user,min_fan_num: in
 
     creators = []
     for creator in get_creator(nation).values():
-        if int(creator["fans"]) < 500:
+        if int(creator["fans"]) < min_fan_num:
             continue
         is_target = False
         for category in categorys:
