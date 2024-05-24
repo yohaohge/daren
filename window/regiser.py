@@ -143,9 +143,10 @@ class Ui_MainWindow(object):
 
 
         self.pushButton.clicked.connect(lambda: self.btn_clicked(MainWindow))
+        self.registerButton.clicked.connect(lambda: self.register_clicked(MainWindow))
+
         self.lineEdit.textEdited.connect(self.btn_clicked2)
         self.lineEdit_2.textEdited.connect(self.btn_clicked2)
-        self.lineEdit_2.returnPressed.connect(lambda: self.btn_clicked(MainWindow))
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
@@ -215,7 +216,54 @@ class Ui_MainWindow(object):
         # self.main.setWindowTitle('欢迎来到达人管家')
         # print(result)
 
+    def register_clicked(self, MainWindow):
+        """
+        管理员登录
+        :return:
+        """
+        self.label_6.setText("正在登录...")
+        self.pushButton.setDisabled(True)
+        QApplication.processEvents()
 
+        headers = {
+            "Content-Type": "application/x-www-form-urlencoded"
+        }
+
+        username = self.lineEdit.text()
+        password = self.lineEdit_2.text()
+
+        data = {
+            "open_id": username,
+            "password": password,
+        }
+        response = requests.post("http://106.52.44.49:504/api/register", headers=headers, data=data)
+
+        if response.status_code != 200:
+            self.label_6.setText("注册失败")
+            self.pushButton.setEnabled(True)
+            return
+
+        if response.json()['code'] != 0:
+            self.label_6.setText("注册失败" + response.json()['msg'])
+            self.pushButton.setEnabled(True)
+            return
+
+        print(response.json())
+        self.label_6.setText("注册成功")
+
+        # result = sql_execute(login(username, password))
+        # if len(result) == 0:
+        #     self.label_6.setText("登录失败：用户名或密码错误")
+        #     self.pushButton.setDisabled(False)
+        # else:
+        # self.label_6.setText("登录成功！")
+        # gl.gl_user = result[0]
+        # self.main = MainUi()
+        # self.main.show()
+        # gl.LOGIN_WINDOW = aw
+        # MainWindow.hide()
+        # self.main.setWindowTitle('欢迎来到达人管家')
+        # print(result)
 if __name__ == "__main__":
     import sys
 
