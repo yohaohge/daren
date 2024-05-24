@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+import time
 
 # Form implementation generated from reading ui file 'login.ui'
 #
@@ -14,7 +15,7 @@ from PyQt5.QtWidgets import QApplication, QMainWindow
 #
 # from grade_statistics.src.vals.db import *
 # import grade_statistics.src.vals.global_var as gl
-
+import requests
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
@@ -75,12 +76,21 @@ class Ui_MainWindow(object):
         self.lineEdit_2.setText("")
         self.lineEdit_2.setEchoMode(QtWidgets.QLineEdit.Password)
         self.lineEdit_2.setObjectName("lineEdit_2")
+
         self.pushButton = QtWidgets.QPushButton(self.centralwidget)
         self.pushButton.setGeometry(QtCore.QRect(290, 250, 81, 31))
         font = QtGui.QFont("Microsoft YaHei")
         font.setPointSize(12)
         self.pushButton.setFont(font)
         self.pushButton.setObjectName("pushButton")
+
+        self.registerButton = QtWidgets.QPushButton(self.centralwidget)
+        self.registerButton.setGeometry(QtCore.QRect(290, 280, 81, 31))
+        font = QtGui.QFont("Microsoft YaHei")
+        font.setPointSize(12)
+        self.registerButton.setFont(font)
+        self.registerButton.setObjectName("registerButton")
+
         self.label_4 = QtWidgets.QLabel(self.centralwidget)
         self.label_4.setGeometry(QtCore.QRect(10, 410, 241, 31))
         font = QtGui.QFont("Microsoft YaHei")
@@ -123,6 +133,15 @@ class Ui_MainWindow(object):
                     #pushButton:hover{background-color:#2c8adf;}
                 ''')
 
+        self.centralwidget.setStyleSheet('''
+                           QLabel#label_6{
+                               color:red;
+                           }
+                           #registerButton{background-color:#2c7adf;color:#fff;border:none;border-radius:4px;}
+                           #registerButton:hover{background-color:#2c8adf;}
+                       ''')
+
+
         self.pushButton.clicked.connect(lambda: self.btn_clicked(MainWindow))
         self.lineEdit.textEdited.connect(self.btn_clicked2)
         self.lineEdit_2.textEdited.connect(self.btn_clicked2)
@@ -130,15 +149,15 @@ class Ui_MainWindow(object):
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
-        MainWindow.setWindowTitle(_translate("MainWindow", "管理员登录 - 小学生成绩管理系统"))
-        self.label.setText(_translate("MainWindow", "小学生成绩管理系统"))
+        MainWindow.setWindowTitle(_translate("MainWindow", "达人管家"))
+        self.label.setText(_translate("MainWindow", "欢迎来到达人管家"))
         self.lineEdit.setPlaceholderText(_translate("MainWindow", "请输入用户名"))
         self.label_2.setText(_translate("MainWindow", "用户名："))
         self.label_3.setText(_translate("MainWindow", "密码："))
         self.lineEdit_2.setPlaceholderText(_translate("MainWindow", "请输入密码"))
         self.pushButton.setText(_translate("MainWindow", "登录"))
-        self.label_4.setText(_translate("MainWindow", "2021面向对象-第17组"))
-        self.label_5.setText(_translate("MainWindow", "组员："))
+        self.registerButton.setText(_translate("MainWindow", "注册"))
+
         # self.label_6.setText(_translate("MainWindow", ""))
 
     def btn_clicked2(self):
@@ -152,20 +171,48 @@ class Ui_MainWindow(object):
         self.label_6.setText("正在登录...")
         self.pushButton.setDisabled(True)
         QApplication.processEvents()
+
+
+        headers = {
+            "Content-Type":"application/x-www-form-urlencoded"
+        }
+
         username = self.lineEdit.text()
         password = self.lineEdit_2.text()
+
+        data = {
+            "open_id":username,
+            "password":password,
+        }
+        response = requests.post("http://106.52.44.49:504/api/login", headers=headers, data=data)
+
+        if response.status_code != 200:
+            self.label_6.setText("登录失败")
+            self.pushButton.setEnabled(True)
+            return
+
+        if response.json()['code'] != 0:
+            self.label_6.setText("登录失败" + response.json()['msg'])
+            self.pushButton.setEnabled(True)
+            return
+
+
+
+        print(response.json())
+        self.label_6.setText("登录成功" + "vip 时间" +str(response.json()['data']['vipTime']) )
+
         # result = sql_execute(login(username, password))
         # if len(result) == 0:
         #     self.label_6.setText("登录失败：用户名或密码错误")
         #     self.pushButton.setDisabled(False)
         # else:
-        self.label_6.setText("登录成功！")
+        # self.label_6.setText("登录成功！")
         # gl.gl_user = result[0]
         # self.main = MainUi()
-        self.main.show()
+        #self.main.show()
         # gl.LOGIN_WINDOW = aw
-        MainWindow.hide()
-        self.main.setWindowTitle('小学生成绩管理系统')
+        #MainWindow.hide()
+        # self.main.setWindowTitle('欢迎来到达人管家')
         # print(result)
 
 
@@ -177,5 +224,5 @@ if __name__ == "__main__":
     w = QMainWindow()  # 实例化QMainWindow类
     aw.setupUi(w)  # 主窗体对象调用setupUi方法，对QMainWindow对象进行设置
     w.show()  # 显示主窗体
-    w.setWindowTitle('管理员登录 - 小学生成绩管理系统')
+    w.setWindowTitle('达人管家')
     sys.exit(App.exec_())  # 循环中等待退出程序

@@ -130,7 +130,7 @@ class Ui_MainWindow(object):
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
-        MainWindow.setWindowTitle(_translate("MainWindow", "管理员登录 - 小学生成绩管理系统"))
+        MainWindow.setWindowTitle(_translate("MainWindow", "达人管家"))
         self.label.setText(_translate("MainWindow", "小学生成绩管理系统"))
         self.lineEdit.setPlaceholderText(_translate("MainWindow", "请输入用户名"))
         self.label_2.setText(_translate("MainWindow", "用户名："))
@@ -165,7 +165,7 @@ class Ui_MainWindow(object):
         self.main.show()
         # gl.LOGIN_WINDOW = aw
         MainWindow.hide()
-        self.main.setWindowTitle('小学生成绩管理系统')
+        self.main.setWindowTitle('达人管家')
         # print(result)
 
 
@@ -177,5 +177,5 @@ if __name__ == "__main__":
     w = QMainWindow()  # 实例化QMainWindow类
     aw.setupUi(w)  # 主窗体对象调用setupUi方法，对QMainWindow对象进行设置
     w.show()  # 显示主窗体
-    w.setWindowTitle('管理员登录 - 小学生成绩管理系统')
+    w.setWindowTitle('达人管家')
     sys.exit(App.exec_())  # 循环中等待退出程序
