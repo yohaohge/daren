@@ -80,7 +80,7 @@ def batch_invite(nation: str, categorys, sample_id, current_user,min_fan_num: in
         creators.append(creator)
 
     # 10个一组
-    groups = [creators[i:i + 20] for i in range(0, len(creators), 20)]
+    groups = [creators[i:i + 45] for i in range(0, len(creators), 45)]
 
 
     # 数据库读取达人信息

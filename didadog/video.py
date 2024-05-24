@@ -2,7 +2,7 @@ import time
 from selenium.webdriver.common.action_chains import ActionChains
 from lxml import etree
 
-from __init__ import *
+from didadog.__init__ import *
 
 url = "https://didadog.com/video/search"
 driver.get(url)

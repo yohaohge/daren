@@ -9,6 +9,7 @@ from util import *
 def copy_invitation(group:list, sample_id, nation) -> bool:
     driver = get_driver()
     try:
+
         from_url = "https://affiliate.tiktokglobalshop.com/connection/target-invitation?shop_region=%s&tab=1"%nation
         switch_to_target(from_url)
         target_url = "https://affiliate.tiktokglobalshop.com/connection/target-invitation/create?invitation_id=%s&enter_from=target_invitation_list&enter_method=duplicate&shop_region=%s"%(sample_id, nation)
@@ -20,6 +21,17 @@ def copy_invitation(group:list, sample_id, nation) -> bool:
             return False
 
         for creator in group:
+
+            if "重复邀请" in driver.page_source:
+                driver.find_element(by=By.XPATH,
+                                    value="/html/body/div[4]/div[2]/div/div[2]/div[3]/div/button")
+                driver.execute_script(
+                    '''
+                    arguments[0].value = arguments[1];
+                    '''
+                    , element,
+                    '')
+
             for i in range(0, 10):
                 try:
 

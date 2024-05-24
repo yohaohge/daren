@@ -2,15 +2,16 @@ import time
 from selenium.webdriver.common.action_chains import ActionChains
 from lxml import etree
 
-from __init__ import *
+from didadog.__init__ import *
 
-url = "https://didadog.com/commodity/productDetail/aFZMbIrLZ8YA"
+url = "https://didadog.com/shopStore/shopDetail/akzM9qIxrpfE"
 driver.get(url)
 time.sleep(2)
 html_content = driver.page_source
 root = etree.HTML(html_content)
 country = root.xpath("/html/body/div[1]/div/div[1]/div/section/section/main/div/div[1]/div[2]/div[2]/div[1]/span")[0]
 
+if len(country) != 0:
 title = root.xpath("/html/body/div[1]/div/div[1]/div/section/section/main/div/div[1]/div[2]/div[2]/div[2]/span")[0]
 print(title.text)
 
